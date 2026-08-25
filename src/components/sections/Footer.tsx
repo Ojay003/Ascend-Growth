@@ -160,7 +160,7 @@ export default function Footer() {
           <span>© 2026 Ascend Growth International. All rights reserved.</span>
           <span className="hidden md:inline">·</span>
           <span>
-            Built for High-Growth Cohorts
+            Website built by Jackson Ojwang
           </span>
         </div>
         
