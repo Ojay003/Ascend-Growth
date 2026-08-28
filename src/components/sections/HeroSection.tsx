@@ -39,10 +39,10 @@ export default function HeroSection() {
           
           <div className="relative mx-auto w-full max-w-[400px] aspect-[4/5] rounded-3xl overflow-hidden border border-zinc-200 shadow-2xl bg-zinc-100">
             <Image 
-              src="/images/portrait.jpg" 
+              src="/images/founder.jpg" 
               alt="Image of the founder" 
               fill 
-              sizes="(max-width: 768px) 100vw, 400px"
+              sizes="(max-width: 400px) 90vw, (max-width: 1024px) 400px, 450px"
               className="object-cover" 
             />
           </div>

@@ -2,25 +2,17 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Phone, Globe, Mail, ArrowRight, CheckCircle2, AlertCircle } from "lucide-react";
+import { Globe, Mail, ArrowRight, CheckCircle2, AlertCircle, ArrowUp, MapPin, Sparkles } from "lucide-react";
 import { useState } from "react";
-
-const TwitterIcon = ({ className }: { className?: string }) => (
-  <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
-);
-
-const InstagramIcon = ({ className }: { className?: string }) => (
-  <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-);
-
-const LinkedinIcon = ({ className }: { className?: string }) => (
-  <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
-);
 
 export default function Footer() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const handleWaitlistSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,69 +42,115 @@ export default function Footer() {
   };
 
   return (
-    <footer className="w-full bg-[#FAFAFA] py-16 px-4 md:px-8 border-t border-zinc-200" id="waitlist">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-8">
+    <footer className="w-full bg-[#05070E] text-white py-16 px-4 sm:px-6 border-t border-white/10 relative overflow-hidden" id="waitlist">
+      {/* Subtle ambient light */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[200px] bg-brand-gold/[0.04] rounded-full blur-3xl pointer-events-none" />
+
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-8 relative z-10">
         
-        <div className="md:col-span-5 flex flex-col space-y-8">
-          <Link href="/" className="flex-shrink-0 flex items-center h-8 md:h-10">
+        {/* Brand & Contact Column (Aligned with Navbar Logo) */}
+        <div className="md:col-span-5 flex flex-col space-y-6">
+          <Link href="/" className="flex-shrink-0 flex items-center h-8 sm:h-9 hover:opacity-90 transition-opacity">
             <Image 
               src="/images/logo.png" 
               alt="Ascend Growth International Logo" 
               width={400} 
               height={120} 
-              className="object-contain w-auto h-full"
+              className="object-contain w-auto h-7 sm:h-8"
               priority
             />
           </Link>
           
-          <p className="text-zinc-600 text-sm md:text-base leading-relaxed max-w-sm">
-            Empowering individuals through learning, leadership, mentorship, and coaching.
+          <p className="text-zinc-200 text-sm md:text-base leading-relaxed max-w-sm font-medium">
+            Empowering individuals through learning, leadership, mentorship, and commercial coaching.
           </p>
+
+          {/* Live HQ Status Pill */}
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#0E1424] border border-white/12 text-xs font-semibold text-zinc-200 w-max shadow-sm">
+            <MapPin className="w-3.5 h-3.5 text-brand-gold shrink-0" />
+            <span>Nairobi, Kenya</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse ml-1" />
+            <span className="text-[11px] text-emerald-400">Admissions Active</span>
+          </div>
           
-          <div className="flex flex-col space-y-4 text-zinc-700 text-sm md:text-base">
-            <a href="https://wa.me/254796469972?text=Hello%20Ascend%20Growth%2C%20I%20would%20like%20to%20inquire%20about%20the%20mentorship%20program" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-zinc-950 transition-colors font-medium">
-              <Phone className="w-5 h-5 text-zinc-500" /> +2547 96469972 (WhatsApp / Call)
+          <div className="flex flex-col space-y-3.5 text-zinc-100 text-sm md:text-base pt-1">
+            <a href="https://wa.me/254796469972?text=Hello%20Ascend%20Growth%2C%20I%20would%20like%20to%20inquire%20about%20the%20mentorship%20program" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-[#25D366] transition-colors font-semibold">
+              <div className="relative w-4 h-4 shrink-0">
+                <Image src="/images/whatsapp.png" alt="WhatsApp" fill className="object-contain" />
+              </div>
+              <span>+2547 96469972 (WhatsApp / Call)</span>
             </a>
-            <a href="mailto:info@ascendgrowth.com" className="flex items-center gap-3 hover:text-zinc-950 transition-colors font-medium">
-              <Mail className="w-5 h-5 text-zinc-500" /> info@ascendgrowth.com
+            <a href="mailto:info@ascendgrowth.com" className="flex items-center gap-3 hover:text-brand-gold transition-colors font-semibold">
+              <Mail className="w-4 h-4 text-brand-gold shrink-0" /> info@ascendgrowth.com
             </a>
-            <a href="https://agi.co.ke" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-zinc-950 transition-colors font-medium">
-              <Globe className="w-5 h-5 text-zinc-500" /> agi.co.ke
+            <a href="https://agi.co.ke" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-brand-gold transition-colors font-semibold">
+              <Globe className="w-4 h-4 text-brand-gold shrink-0" /> agi.co.ke
             </a>
           </div>
           
-          <div className="flex items-center gap-4 pt-2">
-            <a href="#" className="w-10 h-10 rounded-md bg-white border border-zinc-200 flex items-center justify-center text-zinc-600 hover:bg-zinc-900 hover:text-white transition-colors shadow-xs">
-              <TwitterIcon className="w-5 h-5" />
+          {/* Official Brand Social Media Icons */}
+          <div className="flex items-center gap-3 pt-2">
+            <a 
+              href="https://x.com/AscendGrowth" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              aria-label="Follow us on X"
+              className="w-10 h-10 rounded-xl bg-[#0E1424] border border-white/12 flex items-center justify-center hover:border-white/40 hover:scale-105 transition-all shadow-sm group p-2 overflow-hidden"
+            >
+              <div className="relative w-full h-full">
+                <Image src="/images/x.png" alt="X (Twitter)" fill className="object-contain" />
+              </div>
             </a>
-            <a href="#" className="w-10 h-10 rounded-md bg-white border border-zinc-200 flex items-center justify-center text-zinc-600 hover:bg-zinc-900 hover:text-white transition-colors shadow-xs">
-              <LinkedinIcon className="w-5 h-5" />
+            <a 
+              href="https://linkedin.com/company/ascend-growth-international" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              aria-label="Connect on LinkedIn"
+              className="w-10 h-10 rounded-xl bg-[#0E1424] border border-white/12 flex items-center justify-center hover:border-white/40 hover:scale-105 transition-all shadow-sm group p-2 overflow-hidden"
+            >
+              <div className="relative w-full h-full">
+                <Image src="/images/linkedin.png" alt="LinkedIn" fill className="object-contain" />
+              </div>
             </a>
-            <a href="#" className="w-10 h-10 rounded-md bg-white border border-zinc-200 flex items-center justify-center text-zinc-600 hover:bg-zinc-900 hover:text-white transition-colors shadow-xs">
-              <InstagramIcon className="w-5 h-5" />
+            <a 
+              href="https://instagram.com/ascendgrowth" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              aria-label="Follow us on Instagram"
+              className="w-10 h-10 rounded-xl bg-[#0E1424] border border-white/12 flex items-center justify-center hover:border-white/40 hover:scale-105 transition-all shadow-sm group p-2 overflow-hidden"
+            >
+              <div className="relative w-full h-full">
+                <Image src="/images/instagram.png" alt="Instagram" fill className="object-contain" />
+              </div>
             </a>
           </div>
         </div>
 
+        {/* Navigation Quick Links */}
         <div className="md:col-span-3 flex flex-col space-y-6 lg:ml-8">
-          <h4 className="text-zinc-900 text-sm font-bold tracking-widest uppercase">
+          <h4 className="text-brand-gold text-xs sm:text-sm font-extrabold tracking-widest uppercase">
             Quick Links
           </h4>
-          <nav className="flex flex-col space-y-4 text-zinc-600 text-sm md:text-base font-medium">
-            <Link href="#" className="hover:text-zinc-950 hover:translate-x-1 transition-all">Home</Link>
-            <Link href="#services" className="hover:text-zinc-950 hover:translate-x-1 transition-all">How It Works</Link>
-            <Link href="#testimonials" className="hover:text-zinc-950 hover:translate-x-1 transition-all">Success Stories</Link>
-            <a href="https://wa.me/254796469972" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-950 hover:translate-x-1 transition-all">Contact Us</a>
+          <nav className="flex flex-col space-y-3.5 text-zinc-200 text-sm md:text-base font-semibold">
+            <Link href="/" className="hover:text-white hover:translate-x-1 transition-all">Home</Link>
+            <Link href="#services" className="hover:text-white hover:translate-x-1 transition-all">Methodology</Link>
+            <Link href="#founder" className="hover:text-white hover:translate-x-1 transition-all">About Founder</Link>
+            <Link href="#testimonials" className="hover:text-white hover:translate-x-1 transition-all">Real Results</Link>
+            <Link href="/book" className="hover:text-white hover:translate-x-1 transition-all">Book Clarity Call</Link>
           </nav>
         </div>
 
+        {/* Waitlist Subscription Column */}
         <div className="md:col-span-4 flex flex-col space-y-6">
-          <h4 className="text-zinc-900 text-sm font-bold tracking-widest uppercase">
-            Join the Waitlist
-          </h4>
-          <p className="text-zinc-600 text-sm leading-relaxed">
-            Join our waiting list for upcoming cohorts and get notified before spots open to the public.
-          </p>
+          <div className="space-y-1">
+            <div className="flex items-center gap-1.5 text-brand-gold text-xs sm:text-sm font-extrabold tracking-widest uppercase">
+              <Sparkles className="w-3.5 h-3.5 text-brand-gold" />
+              <span>Join the Waitlist</span>
+            </div>
+            <p className="text-zinc-200 text-sm leading-relaxed font-medium pt-1">
+              Join our priority waiting list for upcoming cohorts and get notified before spots open to the general public.
+            </p>
+          </div>
           
           <form onSubmit={handleWaitlistSubmit} className="flex flex-col gap-3">
             <div className="relative">
@@ -123,12 +161,12 @@ export default function Footer() {
                 placeholder="Enter your email address" 
                 required
                 disabled={status === "loading" || status === "success"}
-                className="w-full bg-white border border-zinc-300 rounded-lg px-4 py-3 text-zinc-900 text-sm placeholder:text-zinc-400 focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all disabled:opacity-50 shadow-xs"
+                className="w-full bg-[#0E1424] border border-white/20 rounded-xl px-4 py-3.5 text-white text-sm placeholder:text-zinc-400 focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all disabled:opacity-50 shadow-inner"
               />
               <button 
                 type="submit" 
                 disabled={status === "loading" || status === "success" || !email}
-                className="absolute right-1 top-1 bottom-1 bg-brand-gold hover:bg-brand-gold-hover text-zinc-950 p-2 rounded-md transition-colors disabled:opacity-50 flex items-center justify-center min-w-[40px] font-bold"
+                className="absolute right-1.5 top-1.5 bottom-1.5 bg-brand-gold hover:bg-brand-gold-hover text-zinc-950 px-3.5 rounded-lg transition-colors disabled:opacity-50 flex items-center justify-center min-w-[42px] font-bold shadow-sm"
               >
                 {status === "loading" ? (
                   <div className="w-4 h-4 border-2 border-zinc-950/30 border-t-zinc-950 rounded-full animate-spin" />
@@ -139,14 +177,14 @@ export default function Footer() {
             </div>
             
             {status === "success" && (
-              <div className="flex items-center gap-2 text-emerald-600 text-sm mt-1 animate-in fade-in slide-in-from-top-1 font-medium">
+              <div className="flex items-center gap-2 text-emerald-400 text-sm mt-1 animate-in fade-in slide-in-from-top-1 font-bold">
                 <CheckCircle2 className="w-4 h-4 shrink-0" />
                 <p>{message}</p>
               </div>
             )}
             
             {status === "error" && (
-              <div className="flex items-center gap-2 text-rose-600 text-sm mt-1 animate-in fade-in slide-in-from-top-1 font-medium">
+              <div className="flex items-center gap-2 text-rose-400 text-sm mt-1 animate-in fade-in slide-in-from-top-1 font-bold">
                 <AlertCircle className="w-4 h-4 shrink-0" />
                 <p>{message}</p>
               </div>
@@ -155,18 +193,29 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto mt-16 pt-8 border-t border-zinc-200 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-zinc-500">
+      {/* Bottom Bar with Back to Top Launcher */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-zinc-300 relative z-10 font-medium">
         <div className="flex flex-col md:flex-row items-center gap-2 text-center md:text-left">
-          <span>© 2026 Ascend Growth International. All rights reserved.</span>
-          <span className="hidden md:inline">·</span>
-          <span>
+          <span className="text-zinc-200">© 2026 Ascend Growth International. All rights reserved.</span>
+          <span className="hidden md:inline text-zinc-500">·</span>
+          <span className="text-zinc-400">
             Website built by Jackson Ojwang
           </span>
         </div>
         
-        <div className="flex items-center gap-8">
-          <Link href="#" className="hover:text-zinc-950 transition-colors">Privacy Policy</Link>
-          <Link href="#" className="hover:text-zinc-950 transition-colors">Terms of Use</Link>
+        <div className="flex items-center gap-6">
+          <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
+          <Link href="#" className="hover:text-white transition-colors">Terms of Use</Link>
+          
+          {/* Smooth Back-to-Top Button */}
+          <button
+            onClick={scrollToTop}
+            aria-label="Back to top"
+            className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0E1424] border border-white/15 text-xs font-bold text-brand-gold hover:bg-brand-gold hover:text-zinc-950 transition-all shadow-sm group"
+          >
+            <span>Top</span>
+            <ArrowUp className="w-3.5 h-3.5 transition-transform group-hover:-translate-y-0.5" />
+          </button>
         </div>
       </div>
     </footer>

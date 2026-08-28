@@ -13,14 +13,11 @@ export function CalendlyEmbed({
   className = "",
 }: CalendlyEmbedProps) {
   const [isLoading, setIsLoading] = useState(true);
-
-  // Append light theme styling parameters matching #FAFAFA palette
   const themedUrl = `${url}${
     url.includes("?") ? "&" : "?"
-  }background_color=fafafa&text_color=09090b&primary_color=d9921b&hide_gdpr_banner=1`;
+  }background_color=070a12&text_color=ffffff&primary_color=d9921b&hide_gdpr_banner=1`;
 
   useEffect(() => {
-    // If iframe is already present or loaded
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 1200);
@@ -32,22 +29,19 @@ export function CalendlyEmbed({
     <div className={`relative w-full overflow-hidden ${className}`}>
       {/* Loading Skeleton */}
       {isLoading && (
-        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-[#FAFAFA] gap-4 p-8 rounded-2xl">
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-[#070A12] gap-4 p-8 rounded-2xl">
           <div className="w-10 h-10 border-3 border-brand-gold/20 border-t-brand-gold rounded-full animate-spin" />
-          <p className="text-sm font-medium text-zinc-600 animate-pulse">
+          <p className="text-sm font-medium text-zinc-300 animate-pulse">
             Loading secure booking calendar...
           </p>
         </div>
       )}
-
-      {/* Calendly Inline Widget */}
       <div
         className="calendly-inline-widget w-full rounded-2xl"
         data-url={themedUrl}
         style={{ minWidth: "320px", height: "700px" }}
       />
 
-      {/* Fallback standard iframe in case script is blocked */}
       <noscript>
         <iframe
           src={themedUrl}

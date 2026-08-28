@@ -7,6 +7,8 @@ const IS_VERCEL = process.env.VERCEL === '1' || process.env.NODE_ENV === 'produc
 const DATA_DIR = IS_VERCEL ? path.join('/tmp', 'data') : path.join(process.cwd(), 'data');
 const FILE_PATH = path.join(DATA_DIR, 'waitlist.json');
 
+const DEFAULT_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwMgsKxZCb46nwwReAiEAQ2xljDMMBHlWg9EU7QX0fnYlGnEUaPubOiQ7mXvNa7_WWQfg/exec';
+
 export async function POST(req: Request) {
   try {
     const { email } = await req.json();
@@ -19,13 +21,14 @@ export async function POST(req: Request) {
     const timestamp = new Date().toISOString();
     const userAgent = req.headers.get('user-agent') || 'unknown';
 
-    // 1. If a Google Sheet / Webhook URL is configured in environment variables, forward it
-    const webhookUrl = process.env.WAITLIST_WEBHOOK_URL || process.env.WAITLIST_GOOGLE_SHEET_URL;
+    // 1. Forward lead to Google Sheets
+    const webhookUrl = process.env.WAITLIST_WEBHOOK_URL || process.env.WAITLIST_GOOGLE_SHEET_URL || DEFAULT_WEBHOOK_URL;
     if (webhookUrl) {
       try {
         await fetch(webhookUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
+          redirect: 'follow',
           body: JSON.stringify({
             email: cleanEmail,
             timestamp,
@@ -33,7 +36,7 @@ export async function POST(req: Request) {
           }),
         });
       } catch (webhookErr) {
-        console.error('Failed to forward to webhook:', webhookErr);
+        console.error('Failed to forward to Google Sheets webhook:', webhookErr);
       }
     }
 
@@ -65,7 +68,7 @@ export async function POST(req: Request) {
         await fs.writeFile(FILE_PATH, JSON.stringify(waitlist, null, 2), 'utf-8');
       }
     } catch (fsErr) {
-      // If filesystem write fails on serverless, log the email so it's not lost in server logs
+      // If filesystem write fails on serverless, log the email so it's recorded
       console.log(`[WAITLIST ENTRY SAVED]: ${cleanEmail} at ${timestamp}`);
     }
 
