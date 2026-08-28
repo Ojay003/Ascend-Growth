@@ -96,7 +96,7 @@ export function HeroSection({
           {/* Actions */}
           <motion.div 
             variants={fadeUp}
-            className="relative z-10 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3.5 sm:gap-4 mt-2 w-full sm:w-auto"
+            className="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-2 w-full sm:w-auto"
           >
             {actions.map((action, index) => (
               <Button 
@@ -104,7 +104,7 @@ export function HeroSection({
                 variant={action.variant as any} 
                 size="lg" 
                 asChild 
-                className="w-full sm:w-auto h-13 sm:h-12 px-6 sm:px-8 rounded-xl font-bold text-sm sm:text-base hover:scale-[1.02] transition-transform shadow-xl"
+                className="w-[260px] sm:w-auto h-11 sm:h-12 px-5 sm:px-8 rounded-xl font-bold text-xs sm:text-base hover:scale-[1.02] transition-transform shadow-xl"
               >
                 <a href={action.href} className="flex items-center justify-center gap-2">
                   {action.icon}

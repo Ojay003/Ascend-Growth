@@ -32,7 +32,7 @@ export default function Header() {
             />
           </Link>
 
-          {/* Centered Navigation Links */}
+          {/* Centered Navigation Links (Desktop) */}
           <nav className="hidden md:flex items-center justify-center gap-7 lg:gap-9 text-xs sm:text-sm font-semibold tracking-wide text-white">
             {[
               { href: "/", label: "Home" },
@@ -51,7 +51,7 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* WhatsApp CTA pinned to the far right of the glass island */}
+          {/* WhatsApp CTA pinned to the far right of the glass island (Desktop Only) */}
           <Button
             asChild
             className="hidden sm:inline-flex bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold rounded-full px-4 sm:px-5 py-2 shadow-[0_4px_15px_rgba(37,211,102,0.35)] text-xs transition-all hover:scale-105"
@@ -74,27 +74,9 @@ export default function Header() {
             </a>
           </Button>
 
-          {/* Mobile WhatsApp Quick Icon */}
-          <a
-            href="https://wa.me/254796469972?text=Hello%20Ascend%20Growth%2C%20I%20would%20like%20to%20inquire%20about%20the%20mentorship%20program"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="sm:hidden p-1.5 rounded-full bg-[#25D366] text-white shadow-md hover:scale-105 transition-transform"
-            aria-label="Chat on WhatsApp"
-          >
-            <div className="relative w-5 h-5">
-              <Image
-                src="/images/whatsapp.png"
-                alt="WhatsApp"
-                fill
-                className="object-contain"
-              />
-            </div>
-          </a>
-
-          {/* Mobile Menu Toggle */}
+          {/* Clean Mobile Menu Toggle (No floating whatsapp icon) */}
           <button
-            className="md:hidden p-2 text-white focus:outline-none rounded-full hover:bg-white/10 transition-colors ml-2"
+            className="md:hidden p-2 text-white focus:outline-none rounded-full hover:bg-white/10 transition-colors"
             onClick={toggleMenu}
             aria-label="Toggle menu"
           >
@@ -126,7 +108,7 @@ export default function Header() {
 
             {/* Mobile Action in Drawer */}
             <div className="mt-3 w-full pt-3 border-t border-white/10">
-              <Button asChild className="bg-[#25D366] hover:bg-[#20bd5a] text-white w-full rounded-full py-5 font-bold shadow-[0_4px_15px_rgba(37,211,102,0.35)] text-xs">
+              <Button asChild className="bg-[#25D366] hover:bg-[#20bd5a] text-white w-full rounded-full py-3.5 font-bold shadow-[0_4px_15px_rgba(37,211,102,0.35)] text-xs">
                 <a
                   href="https://wa.me/254796469972?text=Hello%20Ascend%20Growth%2C%20I%20would%20like%20to%20inquire%20about%20the%20mentorship%20program"
                   target="_blank"

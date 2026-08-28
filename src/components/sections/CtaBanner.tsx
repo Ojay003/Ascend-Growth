@@ -85,10 +85,10 @@ export default function CtaBanner() {
             </p>
 
             {/* Call Actions */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-2 w-full max-w-md">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2 w-full">
               <Button
                 asChild
-                className="bg-white hover:bg-zinc-100 text-zinc-950 font-black uppercase tracking-wider h-13 sm:h-14 px-7 rounded-xl transition-all shadow-[0_0_25px_rgba(255,255,255,0.45)] hover:shadow-[0_0_35px_rgba(255,255,255,0.7)] hover:-translate-y-0.5 group text-xs sm:text-sm w-full sm:w-auto border border-white/80"
+                className="bg-white hover:bg-zinc-100 text-zinc-950 font-black uppercase tracking-wider h-11 sm:h-14 px-6 sm:px-7 rounded-xl transition-all shadow-[0_0_25px_rgba(255,255,255,0.45)] hover:shadow-[0_0_35px_rgba(255,255,255,0.7)] hover:-translate-y-0.5 group text-xs sm:text-sm w-[260px] sm:w-auto border border-white/80"
               >
                 <Link href="/book" className="flex items-center justify-center">
                   Book Free Clarity Call
@@ -99,7 +99,7 @@ export default function CtaBanner() {
               <Button
                 asChild
                 variant="whatsapp"
-                className="h-13 sm:h-14 px-6 rounded-xl font-bold uppercase tracking-wider text-xs sm:text-sm w-full sm:w-auto shadow-lg hover:scale-[1.02] transition-transform"
+                className="h-11 sm:h-14 px-5 sm:px-6 rounded-xl font-bold uppercase tracking-wider text-xs sm:text-sm w-[260px] sm:w-auto shadow-lg hover:scale-[1.02] transition-transform"
               >
                 <a 
                   href="https://wa.me/254796469972?text=Hello%20Ascend%20Growth%2C%20I%20would%20like%20to%20inquire%20about%20the%20clarity%20call" 
