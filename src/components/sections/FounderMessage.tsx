@@ -9,9 +9,8 @@ export default function FounderMessage() {
   return (
     <section 
       id="founder" 
-      className="w-full py-16 sm:py-24 md:py-32 px-4 sm:px-6 relative overflow-hidden bg-transparent text-white"
+      className="w-full py-16 sm:py-24 md:py-32 px-4 sm:px-6 relative overflow-hidden bg-transparent text-white scroll-mt-24"
     >
-      {/* Ambient warm lighting glow */}
       <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[700px] h-[350px] bg-brand-gold/10 rounded-full blur-3xl pointer-events-none" />
 
       <motion.div 
@@ -22,8 +21,6 @@ export default function FounderMessage() {
         viewport={{ once: true, margin: "-60px" }}
       >
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-          
-          {/* Left Column (7/12): Centered Text Column (Like Hero Section) */}
           <div className="lg:col-span-7 flex flex-col justify-center text-center items-center max-w-xl mx-auto lg:mx-0 space-y-6">
             <motion.span variants={fadeUp} className="text-xs sm:text-sm font-bold tracking-widest uppercase text-brand-gold bg-brand-gold/15 border border-brand-gold/30 px-3.5 py-1.5 rounded-full inline-block shadow-sm">
               From the Founder
@@ -42,8 +39,6 @@ export default function FounderMessage() {
                 I built Ascend because young professionals don't need another theoretical lecture. They need practical, battle-tested &ldquo;street smarts&rdquo; and a mentor who has actually walked the path to financial independence.
               </p>
             </motion.div>
-
-            {/* Pull Quote Inside Text Column */}
             <motion.div variants={fadeUp} className="w-full text-center">
               <div className="relative bg-[#0E1424]/90 p-5 sm:p-6 rounded-2xl border border-white/12 shadow-2xl backdrop-blur-md space-y-3">
                 <div className="w-8 h-8 mx-auto rounded-full bg-brand-gold/20 border border-brand-gold/40 flex items-center justify-center text-brand-gold shadow-sm">
@@ -59,15 +54,10 @@ export default function FounderMessage() {
               </div>
             </motion.div>
           </div>
-
-          {/* Right Column (5/12): Image Card (Persisting on Right-Hand Side) */}
           <motion.div variants={scaleIn} className="lg:col-span-5 w-full max-w-md sm:max-w-lg mx-auto lg:ml-auto">
-            {/* Outer Hardware Card Shell */}
             <div className="relative p-2.5 sm:p-3.5 rounded-3xl bg-[#0E1424]/90 border border-brand-gold/40 shadow-[0_0_50px_rgba(217,146,27,0.14)] backdrop-blur-xl">
-              {/* Top Accent Dot */}
               <div className="absolute -top-3 -right-3 w-8 h-8 sm:w-10 sm:h-10 bg-brand-gold rounded-full z-20 shadow-lg animate-pulse" />
               
-              {/* Inner 3:2 Landscape Image Frame (Zero Cropping of Text or Portrait) */}
               <div className="relative z-10 w-full aspect-[3/2] rounded-2xl overflow-hidden border border-white/10 bg-[#070A12] shadow-inner">
                 <Image
                   src="/images/message.jpg"
@@ -79,7 +69,6 @@ export default function FounderMessage() {
                 />
               </div>
 
-              {/* Card Footer Caption */}
               <div className="pt-3 px-1 text-center">
                 <span className="text-[11px] font-bold uppercase tracking-wider text-brand-gold">
                   Ascend Growth International

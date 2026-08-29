@@ -1,20 +1,19 @@
 import type { Metadata } from "next";
-import { Old_Standard_TT, Playfair_Display } from "next/font/google";
+import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 
-const oldStandard = Old_Standard_TT({
-  weight: ["400", "700"],
-  style: ["normal", "italic"],
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-old-standard",
+  variable: "--font-grotesque",
   display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const playfair = Playfair_Display({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-playfair",
+  variable: "--font-inter",
   display: "swap",
 });
 
@@ -22,9 +21,12 @@ export const metadata: Metadata = {
   title: "Ascend Growth International | Mentorship Program for Graduates",
   description: "Ascend Growth International offers a structured mentorship program for graduates. Build mindset, acquire high-value skills, and generate your first income. Join the next cohort.",
   icons: {
-    icon: "/icon.svg",
-    shortcut: "/icon.svg",
-    apple: "/icon.svg",
+    icon: [
+      { url: "/icon.png", type: "image/png" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    shortcut: "/icon.png",
+    apple: "/apple-icon.png",
   },
 };
 
@@ -37,9 +39,9 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn("h-full", "antialiased", oldStandard.variable, playfair.variable, "font-sans")}
+      className={cn("h-full", "antialiased", jakarta.variable, inter.variable, "font-sans")}
     >
-      <body className="min-h-full flex flex-col font-sans">
+      <body className="min-h-full flex flex-col font-sans text-base font-normal leading-relaxed">
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

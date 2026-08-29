@@ -31,10 +31,9 @@ export default function ProblemSection() {
 
   return (
     <section 
-      className="relative z-20 w-full bg-transparent text-white py-16 sm:py-24 md:py-32 px-4 sm:px-6 overflow-hidden"
+      id="problem"
+      className="relative z-20 w-full bg-transparent text-white py-16 sm:py-24 md:py-32 px-4 sm:px-6 overflow-hidden scroll-mt-24"
     >
-
-      {/* Ambient background light glows */}
       <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-brand-gold/10 via-transparent to-transparent pointer-events-none z-1" />
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-brand-gold/10 rounded-full blur-3xl pointer-events-none z-1" />
 
@@ -45,7 +44,6 @@ export default function ProblemSection() {
         whileInView="visible"
         viewport={{ once: true, margin: "-60px" }}
       >
-        {/* Centered Section Header */}
         <motion.div className="text-center max-w-3xl mx-auto space-y-3 sm:space-y-4" variants={fadeUp}>
           <span className="text-xs sm:text-sm font-bold tracking-widest uppercase text-brand-gold bg-brand-gold/15 border border-brand-gold/30 px-3.5 py-1.5 rounded-full inline-block">
             The Hard Reality
@@ -57,11 +55,7 @@ export default function ProblemSection() {
             Why ambitious graduates find themselves stuck with high honors, empty inboxes, and mounting frustration.
           </p>
         </motion.div>
-        
-        {/* Asymmetric Hard Reality Bento Grid with Interactive Focus Hover */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-          
-          {/* Bento Card 1: The Academic Paradox (Spans 2 cols) */}
           <motion.div 
             variants={fadeUp} 
             className="md:col-span-2 lg:col-span-2 transition-all duration-300 ease-out"
@@ -90,8 +84,6 @@ export default function ProblemSection() {
                     You spent 4+ years memorizing textbooks and chasing GPAs. But the marketplace doesn't pay for test-taking—it pays for <strong className="text-white font-semibold">monetizable problem solving</strong>.
                   </p>
                 </div>
-
-                {/* Visual Comparison Split Box */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 rounded-xl bg-black/40 border border-white/10">
                   <div className="space-y-2 p-3.5 bg-red-950/30 rounded-lg border border-red-500/30 shadow-xs">
                     <div className="flex items-center gap-2 text-red-400 font-bold text-xs uppercase tracking-wider">
@@ -116,8 +108,6 @@ export default function ProblemSection() {
               </CardContent>
             </Card>
           </motion.div>
-
-          {/* Bento Card 2: The 50:2 Black Hole (1 Col) */}
           <motion.div 
             variants={fadeUp} 
             className="md:col-span-1 lg:col-span-1 transition-all duration-300 ease-out"
@@ -141,8 +131,6 @@ export default function ProblemSection() {
                     You send out fifty customized CVs. Two automated replies. Both ghost you after round two.
                   </p>
                 </div>
-
-                {/* Simulation Metric Pill */}
                 <div className="p-4 rounded-xl bg-black/40 border border-white/10 space-y-2">
                   <div className="flex justify-between items-center text-xs font-semibold text-zinc-300">
                     <span>50 Sent</span>
@@ -161,8 +149,6 @@ export default function ProblemSection() {
               </CardContent>
             </Card>
           </motion.div>
-
-          {/* Bento Card 3: The Compound Clock (1 Col) */}
           <motion.div 
             variants={fadeUp} 
             className="md:col-span-1 lg:col-span-1 transition-all duration-300 ease-out"
@@ -196,8 +182,6 @@ export default function ProblemSection() {
               </CardContent>
             </Card>
           </motion.div>
-
-          {/* Bento Card 4: Family & Social Gravity (Spans 2 cols) */}
           <motion.div 
             variants={fadeUp} 
             className="md:col-span-2 lg:col-span-2 transition-all duration-300 ease-out"
@@ -226,8 +210,6 @@ export default function ProblemSection() {
                     The dread of family gatherings and casual questions: <em className="text-white font-medium">&ldquo;Are you working yet?&rdquo;</em> You feel pushed to take any underpaid, soul-draining position just to look occupied.
                   </p>
                 </div>
-
-                {/* Antidote Callout Banner */}
                 <div className="p-4 rounded-xl bg-gradient-to-r from-brand-gold/20 via-amber-500/10 to-transparent border border-brand-gold/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                   <div className="flex items-center gap-2.5">
                     <CheckCircle2 className="w-5 h-5 text-brand-gold shrink-0" />

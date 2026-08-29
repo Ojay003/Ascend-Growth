@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import fs from 'fs/promises';
 import path from 'path';
 
-// On Vercel / Serverless, process.cwd() is read-only, so /tmp is used as the writable directory
+// On Vercel / Serverless, process.cwd() is read-only
 const IS_VERCEL = process.env.VERCEL === '1' || process.env.NODE_ENV === 'production';
 const DATA_DIR = IS_VERCEL ? path.join('/tmp', 'data') : path.join(process.cwd(), 'data');
 const FILE_PATH = path.join(DATA_DIR, 'waitlist.json');

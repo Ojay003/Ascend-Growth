@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Header from "@/components/sections/Header";
 import { HeroSection } from "@/components/ui/hero-section";
+import ProgramOverviewBar from "@/components/sections/ProgramOverviewBar";
 import ProblemSection from "@/components/sections/ProblemSection";
 import ServicesSection from "@/components/sections/ServiceSection";
 import FounderMessage from "@/components/sections/FounderMessage";
@@ -15,9 +16,7 @@ import { ShapeBackground } from "@/components/ui/shape-background";
 export default function ServiceEcommercePage() {
   return (
     <div className="min-h-screen bg-[#070A12] text-white selection:bg-brand-gold/30 selection:text-white relative">
-      {/* Global Seamless Ambient Floating Background */}
       <ShapeBackground />
-
       <Header />
       <main className="flex flex-col items-center relative z-10">
         <HeroSection
@@ -53,6 +52,7 @@ export default function ServiceEcommercePage() {
             alt: "Purity Gaiti - Mentor",
           }}
         />
+        <ProgramOverviewBar />
         <ProblemSection />
         <ServicesSection />
         <FounderMessage />

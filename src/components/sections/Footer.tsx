@@ -43,29 +43,35 @@ export default function Footer() {
 
   return (
     <footer className="w-full bg-[#05070E] text-white py-16 px-4 sm:px-6 border-t border-white/10 relative overflow-hidden" id="waitlist">
-      {/* Subtle ambient light */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[200px] bg-brand-gold/[0.04] rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-8 relative z-10">
         
-        {/* Brand & Contact Column (Aligned with Navbar Logo) */}
         <div className="md:col-span-5 flex flex-col space-y-6">
-          <Link href="/" className="flex-shrink-0 flex items-center h-8 sm:h-9 hover:opacity-90 transition-opacity">
-            <Image 
-              src="/images/logo.png" 
-              alt="Ascend Growth International Logo" 
-              width={400} 
-              height={120} 
-              className="object-contain w-auto h-7 sm:h-8"
-              priority
-            />
+          <Link href="/" className="flex-shrink-0 flex items-center gap-3.5 hover:opacity-90 transition-opacity group">
+            <div className="relative w-11 h-11 sm:w-12 sm:h-12 shrink-0">
+              <Image 
+                src="/images/favicon-mark.png" 
+                alt="Ascend Growth International" 
+                fill
+                className="object-contain transition-transform group-hover:scale-105"
+                priority
+              />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-base sm:text-lg font-black tracking-wider text-white uppercase leading-none font-sans">
+                Ascend Growth
+              </span>
+              <span className="text-[10px] sm:text-xs font-bold tracking-[0.25em] text-brand-gold uppercase mt-1 font-sans">
+                International
+              </span>
+            </div>
           </Link>
           
           <p className="text-zinc-200 text-sm md:text-base leading-relaxed max-w-sm font-medium">
             Empowering individuals through learning, leadership, mentorship, and commercial coaching.
           </p>
 
-          {/* Live HQ Status Pill */}
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#0E1424] border border-white/12 text-xs font-semibold text-zinc-200 w-max shadow-sm">
             <MapPin className="w-3.5 h-3.5 text-brand-gold shrink-0" />
             <span>Nairobi, Kenya</span>
@@ -88,7 +94,6 @@ export default function Footer() {
             </a>
           </div>
           
-          {/* Official Brand Social Media Icons */}
           <div className="flex items-center gap-3 pt-2">
             <a 
               href="https://x.com/AscendGrowth" 
@@ -133,6 +138,7 @@ export default function Footer() {
           </h4>
           <nav className="flex flex-col space-y-3.5 text-zinc-200 text-sm md:text-base font-semibold">
             <Link href="/" className="hover:text-white hover:translate-x-1 transition-all">Home</Link>
+            <Link href="#problem" className="hover:text-white hover:translate-x-1 transition-all">The Problem</Link>
             <Link href="#services" className="hover:text-white hover:translate-x-1 transition-all">Methodology</Link>
             <Link href="#founder" className="hover:text-white hover:translate-x-1 transition-all">About Founder</Link>
             <Link href="#testimonials" className="hover:text-white hover:translate-x-1 transition-all">Real Results</Link>
@@ -192,8 +198,6 @@ export default function Footer() {
           </form>
         </div>
       </div>
-
-      {/* Bottom Bar with Back to Top Launcher */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-zinc-300 relative z-10 font-medium">
         <div className="flex flex-col md:flex-row items-center gap-2 text-center md:text-left">
           <span className="text-zinc-200">© 2026 Ascend Growth International. All rights reserved.</span>
@@ -207,7 +211,7 @@ export default function Footer() {
           <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
           <Link href="#" className="hover:text-white transition-colors">Terms of Use</Link>
           
-          {/* Smooth Back-to-Top Button */}
+          {/* Back-to-Top Button */}
           <button
             onClick={scrollToTop}
             aria-label="Back to top"

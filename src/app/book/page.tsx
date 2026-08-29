@@ -30,24 +30,16 @@ const AGENDA_STEPS = [
 export default function BookClarityCallPage() {
   return (
     <div className="min-h-screen bg-[#030509] text-white selection:bg-white/20 selection:text-white flex flex-col justify-between relative overflow-hidden">
-      {/* Global Seamless Ambient Floating Background */}
       <ShapeBackground />
-
-      {/* Identical Header Navbar as Main Page */}
       <Header />
-
-      {/* Main Content: Editorial Split */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8 sm:py-12 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
-          
-          {/* Left Column (5/12): Centered Text & Priming Trust Architecture */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="lg:col-span-5 flex flex-col space-y-6 text-center items-center mx-auto lg:mx-0 w-full"
           >
-            {/* Centered Back to Overview Button */}
             <div className="flex justify-center w-full">
               <Link 
                 href="/" 
@@ -72,7 +64,6 @@ export default function BookClarityCallPage() {
               </p>
             </div>
 
-            {/* Host Credibility Card: Pure Crisp White with Deep Black Typography */}
             <div className="w-full flex items-center justify-center gap-4 p-4 sm:p-5 rounded-2xl bg-white text-black border border-white shadow-[0_16px_40px_rgba(0,0,0,0.5)] text-left">
               <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-black shrink-0 shadow-md">
                 <Image
@@ -112,7 +103,7 @@ export default function BookClarityCallPage() {
               </div>
             </div>
 
-            {/* Trust Badges: Centered */}
+            {/* Trust Badges */}
             <div className="pt-2 border-t border-white/20 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-zinc-100 font-semibold w-full">
               <div className="flex items-center justify-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-white shrink-0" />
@@ -140,10 +131,7 @@ export default function BookClarityCallPage() {
             transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             className="lg:col-span-7 w-full flex flex-col space-y-4"
           >
-            {/* Custom Interactive Schedule Picker */}
             <CustomSchedulePicker />
-
-            {/* Quick WhatsApp Alternative Link */}
             <div className="flex flex-col sm:flex-row items-center justify-between p-4 sm:p-5 rounded-2xl bg-white text-black border border-white text-xs gap-3 shadow-[0_16px_40px_rgba(0,0,0,0.5)]">
               <span className="text-black text-center sm:text-left font-black text-sm">
                 Prefer to schedule directly on WhatsApp?
@@ -166,16 +154,11 @@ export default function BookClarityCallPage() {
               </a>
             </div>
           </motion.div>
-
         </div>
       </main>
-
-      {/* Minimal Footer */}
       <footer className="w-full border-t border-white/10 bg-[#030509]/90 backdrop-blur-md py-8 px-4 text-center text-xs text-zinc-300 relative z-10 font-medium">
         <p>© 2026 Ascend Growth International. All rights reserved.</p>
       </footer>
-
-      {/* Floating WhatsApp Action Button */}
       <WhatsAppButton />
     </div>
   );

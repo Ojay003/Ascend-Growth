@@ -37,7 +37,6 @@ export default function CtaBanner() {
       id="apply" 
       className="w-full bg-transparent py-16 sm:py-24 md:py-32 px-4 sm:px-6 relative overflow-hidden"
     >
-      {/* Ambient background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-brand-gold/10 rounded-full blur-[120px] pointer-events-none" />
 
       <motion.div 
@@ -47,7 +46,6 @@ export default function CtaBanner() {
         whileInView="visible"
         viewport={{ once: true, margin: "-60px" }}
       >
-        {/* Subtle dot mesh texture overlay */}
         <div
           className="absolute inset-0 opacity-[0.03] pointer-events-none"
           style={{
@@ -55,17 +53,11 @@ export default function CtaBanner() {
             backgroundSize: "24px 24px",
           }}
         />
-
-        {/* Ambient corners */}
         <div className="absolute -top-10 -right-10 w-72 h-72 bg-brand-gold/15 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-10 -left-10 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-          
-          {/* Left Column (7/12): Centered Text & Conversion Action */}
           <motion.div variants={fadeUp} className="lg:col-span-7 flex flex-col space-y-6 text-center items-center mx-auto lg:mx-0">
-            
-            {/* Live Status Pill */}
             <div className="flex items-center justify-center">
               <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-brand-gold/15 text-brand-gold border border-brand-gold/30 shadow-sm">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
@@ -84,7 +76,7 @@ export default function CtaBanner() {
               A private 1-on-1 strategy call with founder Purity Gaiti to audit where you are currently stuck and map your transition into an independent, earning professional.
             </p>
 
-            {/* Call Actions */}
+            {/* Call-to-Actions */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2 w-full">
               <Button
                 asChild
@@ -120,7 +112,6 @@ export default function CtaBanner() {
               </Button>
             </div>
 
-            {/* Reassurance Trust Strip */}
             <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs text-zinc-400 font-medium pt-3 border-t border-white/10 w-full">
               <span className="flex items-center gap-1.5 text-zinc-300">
                 <CheckCircle2 className="w-4 h-4 text-brand-gold shrink-0" />
@@ -138,11 +129,9 @@ export default function CtaBanner() {
 
           </motion.div>
 
-          {/* Right Column (5/12): Interactive 30-Minute Timeline Visualizer */}
           <motion.div variants={fadeUp} className="lg:col-span-5 w-full">
             <div className="rounded-2xl sm:rounded-3xl bg-[#13192B]/90 border border-white/10 p-5 sm:p-7 shadow-2xl backdrop-blur-xl space-y-4">
-              
-              {/* Box Header */}
+
               <div className="flex items-center justify-between pb-3 border-b border-white/10">
                 <div className="flex items-center gap-2">
                   <Clock className="w-4 h-4 text-brand-gold" />
@@ -155,7 +144,6 @@ export default function CtaBanner() {
                 </span>
               </div>
 
-              {/* Steps List */}
               <div className="space-y-3">
                 {TIMELINE_STEPS.map((step, idx) => (
                   <div 
@@ -176,8 +164,6 @@ export default function CtaBanner() {
                   </div>
                 ))}
               </div>
-
-              {/* Bottom Reassurance */}
               <div className="p-3 rounded-xl bg-black/40 border border-white/10 text-center">
                 <p className="text-[11px] text-zinc-400 font-medium">
                   Strictly capped at 30 minutes · Direct with Founder Purity Gaiti

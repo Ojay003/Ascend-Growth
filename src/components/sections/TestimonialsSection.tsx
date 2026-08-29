@@ -60,7 +60,7 @@ const PARENT_AND_COMMUNITY_STORIES = [
     id: 7,
     name: "Sarah W.",
     role: "Cohort 3 Alum",
-    quote: "Purity’s 1-on-1 feedback on my pitch scripts completely altered how I communicate with high-budget decision makers.",
+    quote: "Purity's 1-on-1 feedback on my pitch scripts completely altered how I communicate with high-budget decision makers.",
     tag: "Graduate Alum",
     tagColor: "bg-brand-gold/15 text-brand-gold border-brand-gold/30",
   },
@@ -121,7 +121,7 @@ export default function TestimonialsSection() {
   return (
     <section 
       id="testimonials" 
-      className="w-full py-16 sm:py-24 md:py-32 relative bg-transparent text-white overflow-hidden"
+      className="w-full py-16 sm:py-24 md:py-32 relative bg-transparent text-white overflow-hidden scroll-mt-24"
     >
       {/* Ambient background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-brand-gold/10 rounded-full blur-3xl pointer-events-none" />
@@ -149,19 +149,13 @@ export default function TestimonialsSection() {
 
       {/* Infinite Dual-Velocity Rails Container with Edge Fades */}
       <div className="relative w-full overflow-hidden space-y-5 sm:space-y-6">
-        
-        {/* Side Gradient Fade Masks (Ensures clean entry/exit) */}
         <div className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-32 bg-gradient-to-r from-[#070A12] via-[#070A12]/80 to-transparent z-20" />
         <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-32 bg-gradient-to-l from-[#070A12] via-[#070A12]/80 to-transparent z-20" />
-
-        {/* Top Rail: Glides Left */}
         <div className="flex gap-4 sm:gap-6 w-max animate-marquee hover:[animation-play-state:paused] py-2">
           {row1.map((story, i) => (
             <TestimonialCard key={`top-${story.id}-${i}`} story={story} />
           ))}
         </div>
-
-        {/* Bottom Rail: Glides Right */}
         <div className="flex gap-4 sm:gap-6 w-max animate-marquee-reverse hover:[animation-play-state:paused] py-2">
           {row2.map((story, i) => (
             <TestimonialCard key={`bottom-${story.id}-${i}`} story={story} />

@@ -9,7 +9,7 @@ const PHASES = [
   {
     id: 0,
     step: "Phase 01",
-    weeks: "Weeks 1–3",
+    weeks: "Weeks 1-3",
     title: "Mindset Calibration",
     shortDesc: "Rewire the graduate mindset and unlearn the 'wait-to-be-hired' passive mentality.",
     fullDesc: "Before you learn to sell or invoice, you must shatter the academic illusion. We eliminate imposter syndrome, instill daily discipline, and train you to think like an independent service provider rather than a hopeful applicant.",
@@ -26,7 +26,7 @@ const PHASES = [
   {
     id: 1,
     step: "Phase 02",
-    weeks: "Weeks 4–6",
+    weeks: "Weeks 4-6",
     title: "High-Value Market Skills",
     shortDesc: "Acquire the practical digital skills, direct outreach, and sales mastery the market pays for.",
     fullDesc: "No academic theory. You will master the exact skills businesses pay top-dollar for: direct DM & email outreach, objection handling, high-converting offer crafting, and effective client communication.",
@@ -43,7 +43,7 @@ const PHASES = [
   {
     id: 2,
     step: "Phase 03",
-    weeks: "Weeks 7–9",
+    weeks: "Weeks 7-9",
     title: "Real-World Monetisation",
     shortDesc: "Pitch live prospects, handle objections, and land your first paying client before cohort ends.",
     fullDesc: "This is where theory turns into bank alerts. Under direct 1-on-1 mentorship, you will conduct live discovery calls, pitch your services to real businesses, and close your first paying client.",
@@ -60,7 +60,7 @@ const PHASES = [
   {
     id: 3,
     step: "Phase 04",
-    weeks: "Weeks 10–12",
+    weeks: "Weeks 10-12",
     title: "Scaling & Independence",
     shortDesc: "Build reliable systems to turn one-off gigs into predictable, recurring monthly income.",
     fullDesc: "Transform an initial client win into sustainable financial freedom. Build automated referral engines, structure retainer agreements, and master the art of long-term career independence.",
@@ -94,9 +94,8 @@ export default function ServicesSection() {
     <section 
       ref={ref} 
       id="services" 
-      className="w-full bg-transparent text-white py-16 sm:py-24 md:py-32 px-4 sm:px-6 relative overflow-hidden"
+      className="w-full bg-transparent text-white py-16 sm:py-24 md:py-32 px-4 sm:px-6 relative overflow-hidden scroll-mt-24"
     >
-      {/* Radiant ambient gold lighting orbs */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[750px] h-[380px] bg-brand-gold/12 rounded-full blur-[110px] pointer-events-none" />
       <div className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-amber-500/10 rounded-full blur-[100px] pointer-events-none" />
 
