@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Star, Quote, CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { fadeUp } from "@/hooks/useScrollReveal";
@@ -114,9 +115,44 @@ function TestimonialCard({ story }: { story: typeof GRADUATE_STORIES[0] }) {
 }
 
 export default function TestimonialsSection() {
+  const [stories, setStories] = useState({
+    graduates: GRADUATE_STORIES,
+    parents: PARENT_AND_COMMUNITY_STORIES,
+  });
+
+  useEffect(() => {
+    async function loadTestimonials() {
+      try {
+        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+        if (!supabaseUrl || supabaseUrl.includes("placeholder")) return;
+
+        const { createClient } = await import("@/lib/supabase/client");
+        const supabase = createClient();
+        const { data, error } = await supabase
+          .from("testimonials")
+          .select("*")
+          .eq("is_active", true)
+          .order("order_index", { ascending: true });
+
+        if (data && !error && data.length > 0) {
+          const grads = data.filter((item: any) => item.tag === "Graduate Alum");
+          const pars = data.filter((item: any) => item.tag === "Parent Perspective");
+          setStories({
+            graduates: grads.length > 0 ? grads : GRADUATE_STORIES,
+            parents: pars.length > 0 ? pars : PARENT_AND_COMMUNITY_STORIES,
+          });
+        }
+      } catch (err) {
+        console.error("Using fallback testimonials:", err);
+      }
+    }
+
+    loadTestimonials();
+  }, []);
+
   // Duplicate arrays for seamless infinite loop
-  const row1 = [...GRADUATE_STORIES, ...GRADUATE_STORIES, ...GRADUATE_STORIES];
-  const row2 = [...PARENT_AND_COMMUNITY_STORIES, ...PARENT_AND_COMMUNITY_STORIES, ...PARENT_AND_COMMUNITY_STORIES];
+  const row1 = [...stories.graduates, ...stories.graduates, ...stories.graduates];
+  const row2 = [...stories.parents, ...stories.parents, ...stories.parents];
 
   return (
     <section 

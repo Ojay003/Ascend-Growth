@@ -40,7 +40,29 @@ export async function POST(req: Request) {
       }
     }
 
-    // 2. Safe local / serverless fallback storage
+    // 2. Persist to Supabase if configured
+    try {
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+      const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+      if (supabaseUrl && supabaseKey && !supabaseUrl.includes('placeholder')) {
+        const { createClient } = await import('@supabase/supabase-js');
+        const supabase = createClient(supabaseUrl, supabaseKey);
+        await supabase.from('waitlist').upsert(
+          {
+            email: cleanEmail,
+            source: 'Website Footer Waitlist',
+            user_agent: userAgent,
+            status: 'new',
+            created_at: timestamp,
+          },
+          { onConflict: 'email' }
+        );
+      }
+    } catch (supabaseErr) {
+      console.error('Failed to write waitlist to Supabase:', supabaseErr);
+    }
+
+    // 3. Safe local / serverless fallback storage
     try {
       try {
         await fs.access(DATA_DIR);

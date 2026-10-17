@@ -43,7 +43,29 @@ export async function POST(req: Request) {
       }
     }
 
-    // Local / serverless persistence
+    // 2. Persist to Supabase if configured
+    try {
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+      const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+      if (supabaseUrl && supabaseKey && !supabaseUrl.includes('placeholder')) {
+        const { createClient } = await import('@supabase/supabase-js');
+        const supabase = createClient(supabaseUrl, supabaseKey);
+        await supabase.from('bookings').insert({
+          name: bookingRecord.name,
+          email: bookingRecord.email,
+          phone: bookingRecord.phone,
+          date: bookingRecord.date,
+          time_slot: bookingRecord.timeSlot,
+          degree: bookingRecord.degree,
+          status: 'pending',
+          created_at: timestamp,
+        });
+      }
+    } catch (supabaseErr) {
+      console.error('Failed to write booking to Supabase:', supabaseErr);
+    }
+
+    // 3. Local / serverless persistence fallback
     try {
       try {
         await fs.access(DATA_DIR);
