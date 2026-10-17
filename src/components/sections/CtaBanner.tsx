@@ -1,37 +1,125 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle2, Clock, ShieldCheck, Video } from "lucide-react";
 import { motion } from "framer-motion";
 import { fadeUp, staggerContainer } from "@/hooks/useScrollReveal";
+import { createClient } from "@/lib/supabase/client";
 
-const TIMELINE_STEPS = [
+// ---------------------------------------------------------------------------
+// Types
+// ---------------------------------------------------------------------------
+interface AgendaStep {
+  time: string;
+  title: string;
+  desc: string;
+}
+
+interface TimelineStep extends AgendaStep {
+  iconColor: string;
+  bgColor: string;
+}
+
+interface CtaConfig {
+  badge_text?: string;
+  headline_line1?: string;
+  headline_line2?: string;
+  body?: string;
+  agenda_title?: string;
+  agenda_footer?: string;
+  agenda_steps?: AgendaStep[];
+}
+
+// ---------------------------------------------------------------------------
+// Per-step colour classes (not stored in DB — always hard-coded)
+// ---------------------------------------------------------------------------
+const STEP_STYLES: { iconColor: string; bgColor: string }[] = [
+  { iconColor: "text-amber-400",   bgColor: "bg-amber-500/10 border-amber-500/30" },
+  { iconColor: "text-brand-gold",  bgColor: "bg-brand-gold/15 border-brand-gold/40" },
+  { iconColor: "text-emerald-400", bgColor: "bg-emerald-500/10 border-emerald-500/30" },
+];
+
+// ---------------------------------------------------------------------------
+// Defaults
+// ---------------------------------------------------------------------------
+const DEFAULT_STEPS: TimelineStep[] = [
   {
     time: "00 – 10m",
     title: "The Bottleneck Audit",
     desc: "We diagnose where you are stuck—whether it's sending ghosted CVs, low market clarity, or lack of commercial confidence.",
-    iconColor: "text-amber-400",
-    bgColor: "bg-amber-500/10 border-amber-500/30",
+    ...STEP_STYLES[0],
   },
   {
     time: "10 – 20m",
     title: "Skill & Offer Match",
     desc: "We map your natural strengths against our 4-Phase framework to identify the high-ticket service you can monetize immediately.",
-    iconColor: "text-brand-gold",
-    bgColor: "bg-brand-gold/15 border-brand-gold/40",
+    ...STEP_STYLES[1],
   },
   {
     time: "20 – 30m",
     title: "Honest Fit & Action Plan",
     desc: "You get transparent feedback on whether AGI is the right next step. If not, you still leave with a practical roadmap.",
-    iconColor: "text-emerald-400",
-    bgColor: "bg-emerald-500/10 border-emerald-500/30",
+    ...STEP_STYLES[2],
   },
 ];
 
+const DEFAULT_CTA = {
+  badge_text: "Next Cohort Applications Open",
+  headline_line1: "No commitment.",
+  headline_line2: "No pressure.",
+  body: "A private 1-on-1 strategy call with founder Purity Gaiti to audit where you are currently stuck and map your transition into an independent, earning professional.",
+  agenda_title: "Inside Your 30 Minutes:",
+  agenda_footer: "Strictly capped at 30 minutes · Direct with Founder Purity Gaiti",
+};
+
 export default function CtaBanner() {
+  const [badgeText, setBadgeText]       = useState(DEFAULT_CTA.badge_text);
+  const [headlineLine1, setHeadlineLine1] = useState(DEFAULT_CTA.headline_line1);
+  const [headlineLine2, setHeadlineLine2] = useState(DEFAULT_CTA.headline_line2);
+  const [body, setBody]                 = useState(DEFAULT_CTA.body);
+  const [agendaTitle, setAgendaTitle]   = useState(DEFAULT_CTA.agenda_title);
+  const [agendaFooter, setAgendaFooter] = useState(DEFAULT_CTA.agenda_footer);
+  const [timelineSteps, setTimelineSteps] = useState<TimelineStep[]>(DEFAULT_STEPS);
+
+  useEffect(() => {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
+    if (!supabaseUrl || supabaseUrl.includes("placeholder")) return;
+
+    const supabase = createClient();
+
+    async function fetchConfig() {
+      const { data } = await supabase
+        .from("site_settings")
+        .select("value")
+        .eq("key", "cta_config")
+        .single();
+
+      if (data?.value) {
+        const cfg = data.value as CtaConfig;
+        if (cfg.badge_text)     setBadgeText(cfg.badge_text);
+        if (cfg.headline_line1) setHeadlineLine1(cfg.headline_line1);
+        if (cfg.headline_line2) setHeadlineLine2(cfg.headline_line2);
+        if (cfg.body)           setBody(cfg.body);
+        if (cfg.agenda_title)   setAgendaTitle(cfg.agenda_title);
+        if (cfg.agenda_footer)  setAgendaFooter(cfg.agenda_footer);
+
+        if (Array.isArray(cfg.agenda_steps) && cfg.agenda_steps.length > 0) {
+          setTimelineSteps(
+            cfg.agenda_steps.map((step, idx) => ({
+              ...step,
+              ...(STEP_STYLES[idx] ?? STEP_STYLES[STEP_STYLES.length - 1]),
+            }))
+          );
+        }
+      }
+    }
+
+    fetchConfig();
+  }, []);
+
   return (
     <section 
       id="apply" 
@@ -61,19 +149,19 @@ export default function CtaBanner() {
             <div className="flex items-center justify-center">
               <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-brand-gold/15 text-brand-gold border border-brand-gold/30 shadow-sm">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                Next Cohort Applications Open
+                {badgeText}
               </span>
             </div>
 
             {/* Main Headline */}
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-[1.12] tracking-tight text-center">
-              No commitment. <br />
-              <span className="text-brand-gold">No pressure.</span>
+              {headlineLine1} <br />
+              <span className="text-brand-gold">{headlineLine2}</span>
             </h2>
 
             {/* Body Copy */}
             <p className="text-base sm:text-lg text-zinc-300 leading-relaxed max-w-xl text-center">
-              A private 1-on-1 strategy call with founder Purity Gaiti to audit where you are currently stuck and map your transition into an independent, earning professional.
+              {body}
             </p>
 
             {/* Call-to-Actions */}
@@ -136,7 +224,7 @@ export default function CtaBanner() {
                 <div className="flex items-center gap-2">
                   <Clock className="w-4 h-4 text-brand-gold" />
                   <h3 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-white">
-                    Inside Your 30 Minutes:
+                    {agendaTitle}
                   </h3>
                 </div>
                 <span className="text-[10px] sm:text-xs font-semibold px-2 py-0.5 rounded-full bg-brand-gold/15 text-brand-gold border border-brand-gold/30">
@@ -145,7 +233,7 @@ export default function CtaBanner() {
               </div>
 
               <div className="space-y-3">
-                {TIMELINE_STEPS.map((step, idx) => (
+                {timelineSteps.map((step, idx) => (
                   <div 
                     key={idx}
                     className="p-3.5 rounded-xl bg-[#192135] border border-white/8 hover:border-brand-gold/40 transition-colors shadow-xs group space-y-1.5 text-left"
@@ -166,7 +254,7 @@ export default function CtaBanner() {
               </div>
               <div className="p-3 rounded-xl bg-black/40 border border-white/10 text-center">
                 <p className="text-[11px] text-zinc-400 font-medium">
-                  Strictly capped at 30 minutes · Direct with Founder Purity Gaiti
+                  {agendaFooter}
                 </p>
               </div>
 

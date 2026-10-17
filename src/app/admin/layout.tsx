@@ -12,7 +12,9 @@ import {
   UserPlus, 
   LogOut, 
   ExternalLink,
-  ChevronRight
+  ChevronRight,
+  Layers,
+  ImageIcon,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 
@@ -21,6 +23,8 @@ const NAVIGATION_ITEMS = [
   { name: "Bookings", href: "/admin/bookings", icon: CalendarCheck },
   { name: "Waitlist", href: "/admin/waitlist", icon: Users },
   { name: "Site Content", href: "/admin/content", icon: FileEdit },
+  { name: "Program Editor", href: "/admin/content/program", icon: Layers },
+  { name: "Media & Images", href: "/admin/media", icon: ImageIcon },
   { name: "Testimonials", href: "/admin/testimonials", icon: MessageSquareQuote },
   { name: "Team & Invites", href: "/admin/team", icon: UserPlus },
 ];
@@ -71,7 +75,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {/* Navigation Links */}
         <nav className="p-4 space-y-1.5 flex-1">
           {NAVIGATION_ITEMS.map((item) => {
-            const isActive = pathname === item.href;
+            const isActive = item.href === '/admin'
+              ? pathname === '/admin'
+              : pathname.startsWith(item.href);
             const Icon = item.icon;
             return (
               <Link

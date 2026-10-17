@@ -1,11 +1,60 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BrainCircuit, Zap, TrendingUp, Repeat2, CheckCircle2, ArrowRight, Sparkles, Award } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useScrollReveal, staggerContainer, fadeUp } from "@/hooks/useScrollReveal";
+import { createClient } from "@/lib/supabase/client";
 
-const PHASES = [
+// ---------------------------------------------------------------------------
+// Icon map – resolves string names stored in DB to Lucide components
+// ---------------------------------------------------------------------------
+const ICON_MAP: Record<string, React.ElementType> = {
+  BrainCircuit,
+  Zap,
+  TrendingUp,
+  Repeat2,
+};
+
+// ---------------------------------------------------------------------------
+// Types
+// ---------------------------------------------------------------------------
+interface PhaseData {
+  id: number;
+  step: string;
+  weeks: string;
+  title: string;
+  shortDesc: string;
+  fullDesc: string;
+  iconName: string;
+  deliverables: string[];
+  milestone: string;
+}
+
+interface Phase extends PhaseData {
+  icon: React.ElementType;
+  iconColor: string;
+  iconBg: string;
+}
+
+interface ProgramConfig {
+  section_badge?: string;
+  heading?: string;
+  subheading?: string;
+  deliverables_pills?: string[];
+  phases?: PhaseData[];
+}
+
+// ---------------------------------------------------------------------------
+// Hard-coded style constants (not CMS-driven)
+// ---------------------------------------------------------------------------
+const ICON_COLOR = "text-brand-gold";
+const ICON_BG    = "bg-brand-gold/20";
+
+// ---------------------------------------------------------------------------
+// Defaults
+// ---------------------------------------------------------------------------
+const DEFAULT_PHASES: Phase[] = [
   {
     id: 0,
     step: "Phase 01",
@@ -13,9 +62,10 @@ const PHASES = [
     title: "Mindset Calibration",
     shortDesc: "Rewire the graduate mindset and unlearn the 'wait-to-be-hired' passive mentality.",
     fullDesc: "Before you learn to sell or invoice, you must shatter the academic illusion. We eliminate imposter syndrome, instill daily discipline, and train you to think like an independent service provider rather than a hopeful applicant.",
+    iconName: "BrainCircuit",
     icon: BrainCircuit,
-    iconColor: "text-brand-gold",
-    iconBg: "bg-brand-gold/20",
+    iconColor: ICON_COLOR,
+    iconBg: ICON_BG,
     deliverables: [
       "Deconstruct the 'Employee Mindset' & build unshakeable confidence",
       "Daily high-performance routines & rejection desensitization",
@@ -30,9 +80,10 @@ const PHASES = [
     title: "High-Value Market Skills",
     shortDesc: "Acquire the practical digital skills, direct outreach, and sales mastery the market pays for.",
     fullDesc: "No academic theory. You will master the exact skills businesses pay top-dollar for: direct DM & email outreach, objection handling, high-converting offer crafting, and effective client communication.",
+    iconName: "Zap",
     icon: Zap,
-    iconColor: "text-brand-gold",
-    iconBg: "bg-brand-gold/20",
+    iconColor: ICON_COLOR,
+    iconBg: ICON_BG,
     deliverables: [
       "Master high-ticket closing & live sales roleplay simulations",
       "Build a client-attracting portfolio & personalized outreach scripts",
@@ -47,9 +98,10 @@ const PHASES = [
     title: "Real-World Monetisation",
     shortDesc: "Pitch live prospects, handle objections, and land your first paying client before cohort ends.",
     fullDesc: "This is where theory turns into bank alerts. Under direct 1-on-1 mentorship, you will conduct live discovery calls, pitch your services to real businesses, and close your first paying client.",
+    iconName: "TrendingUp",
     icon: TrendingUp,
-    iconColor: "text-brand-gold",
-    iconBg: "bg-brand-gold/20",
+    iconColor: ICON_COLOR,
+    iconBg: ICON_BG,
     deliverables: [
       "Live call reviews & real-time pitch feedback from mentor leads",
       "Negotiating payment terms, retainers, and closing deals",
@@ -64,9 +116,10 @@ const PHASES = [
     title: "Scaling & Independence",
     shortDesc: "Build reliable systems to turn one-off gigs into predictable, recurring monthly income.",
     fullDesc: "Transform an initial client win into sustainable financial freedom. Build automated referral engines, structure retainer agreements, and master the art of long-term career independence.",
+    iconName: "Repeat2",
     icon: Repeat2,
-    iconColor: "text-brand-gold",
-    iconBg: "bg-brand-gold/20",
+    iconColor: ICON_COLOR,
+    iconBg: ICON_BG,
     deliverables: [
       "Transition from one-off gigs to recurring monthly retainers",
       "Systematized referral generation & network leverage",
@@ -76,18 +129,75 @@ const PHASES = [
   },
 ];
 
-const DELIVERABLES_PILLS = [
+const DEFAULT_PILLS = [
   "1-on-1 Mentor Guidance",
   "Weekly Accountability Reviews",
   "Live Sales Role-Plays",
   "Real Client Invoicing",
 ];
 
+const DEFAULT_HEADER = {
+  section_badge: "The Framework",
+  heading: "The 4-Phase Ascend Methodology",
+  subheading:
+    "A structured 12-week intensive cohort designed to transform stuck graduates into confident, self-reliant professionals.",
+};
+
+// ---------------------------------------------------------------------------
+// Helper – converts a raw PhaseData (from DB) to a renderable Phase
+// ---------------------------------------------------------------------------
+function toPhase(data: PhaseData): Phase {
+  return {
+    ...data,
+    icon: ICON_MAP[data.iconName] ?? BrainCircuit,
+    iconColor: ICON_COLOR,
+    iconBg: ICON_BG,
+  };
+}
+
 export default function ServicesSection() {
   const { ref, controls } = useScrollReveal();
   const [activeTab, setActiveTab] = useState<number>(0);
 
-  const activePhase = PHASES[activeTab];
+  const [sectionBadge, setSectionBadge] = useState(DEFAULT_HEADER.section_badge);
+  const [heading, setHeading]           = useState(DEFAULT_HEADER.heading);
+  const [subheading, setSubheading]     = useState(DEFAULT_HEADER.subheading);
+  const [pills, setPills]               = useState<string[]>(DEFAULT_PILLS);
+  const [phases, setPhases]             = useState<Phase[]>(DEFAULT_PHASES);
+
+  useEffect(() => {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
+    if (!supabaseUrl || supabaseUrl.includes("placeholder")) return;
+
+    const supabase = createClient();
+
+    async function fetchConfig() {
+      const { data } = await supabase
+        .from("site_settings")
+        .select("value")
+        .eq("key", "program_config")
+        .single();
+
+      if (data?.value) {
+        const cfg = data.value as ProgramConfig;
+        if (cfg.section_badge) setSectionBadge(cfg.section_badge);
+        if (cfg.heading)       setHeading(cfg.heading);
+        if (cfg.subheading)    setSubheading(cfg.subheading);
+        if (Array.isArray(cfg.deliverables_pills) && cfg.deliverables_pills.length > 0) {
+          setPills(cfg.deliverables_pills);
+        }
+        if (Array.isArray(cfg.phases) && cfg.phases.length > 0) {
+          setPhases(cfg.phases.map(toPhase));
+          // Reset active tab if it's out of range
+          setActiveTab((prev) => Math.min(prev, cfg.phases!.length - 1));
+        }
+      }
+    }
+
+    fetchConfig();
+  }, []);
+
+  const activePhase = phases[activeTab] ?? phases[0];
   const IconComponent = activePhase.icon;
 
   return (
@@ -109,18 +219,18 @@ export default function ServicesSection() {
         {/* Centered Section Header */}
         <motion.div className="text-center max-w-3xl mx-auto space-y-4" variants={fadeUp}>
           <span className="text-xs sm:text-sm font-bold tracking-widest uppercase text-brand-gold bg-brand-gold/15 border border-brand-gold/30 px-3.5 py-1.5 rounded-full inline-block shadow-sm">
-            The Framework
+            {sectionBadge}
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
-            The 4-Phase Ascend Methodology
+            {heading}
           </h2>
           <p className="text-base sm:text-lg text-zinc-300 max-w-2xl mx-auto leading-relaxed">
-            A structured 12-week intensive cohort designed to transform stuck graduates into confident, self-reliant professionals.
+            {subheading}
           </p>
 
           {/* Deliverables summary strip */}
           <div className="pt-2 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
-            {DELIVERABLES_PILLS.map((item, i) => (
+            {pills.map((item, i) => (
               <span 
                 key={i} 
                 className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#111726] border border-white/15 text-xs sm:text-sm font-semibold text-zinc-200 shadow-sm"
@@ -137,7 +247,7 @@ export default function ServicesSection() {
           
           {/* Phase Tab Selector Bar */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 p-2 bg-[#0B0F18]/90 rounded-2xl sm:rounded-full max-w-4xl mx-auto border border-white/12 backdrop-blur-md shadow-2xl">
-            {PHASES.map((phase) => {
+            {phases.map((phase) => {
               const isSelected = activeTab === phase.id;
               return (
                 <button
@@ -189,7 +299,7 @@ export default function ServicesSection() {
                   </div>
 
                   <span className="text-xs font-medium text-zinc-400 hidden md:block uppercase tracking-wider">
-                    Step {activeTab + 1} of 4 in Journey
+                    Step {activeTab + 1} of {phases.length} in Journey
                   </span>
                 </div>
 
@@ -231,12 +341,12 @@ export default function ServicesSection() {
                     </div>
                   </div>
 
-                  {activeTab < PHASES.length - 1 ? (
+                  {activeTab < phases.length - 1 ? (
                     <button
                       onClick={() => setActiveTab(activeTab + 1)}
                       className="text-xs sm:text-sm font-bold text-brand-gold hover:text-white hover:underline flex items-center gap-1 shrink-0 pt-2 sm:pt-0"
                     >
-                      Next: {PHASES[activeTab + 1].title} <ArrowRight className="w-4 h-4 text-brand-gold" />
+                      Next: {phases[activeTab + 1].title} <ArrowRight className="w-4 h-4 text-brand-gold" />
                     </button>
                   ) : (
                     <a

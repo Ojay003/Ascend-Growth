@@ -1,10 +1,34 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Clock, Calendar, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 import { fadeUp } from "@/hooks/useScrollReveal";
+import { createClient } from "@/lib/supabase/client";
 
-const PROGRAM_METRICS = [
+// ---------------------------------------------------------------------------
+// Types
+// ---------------------------------------------------------------------------
+interface MetricItem {
+  icon: React.ElementType;
+  label: string;
+  value: string;
+  badge: string;
+}
+
+interface CohortConfig {
+  admission_date?: string;
+  duration?: string;
+  format?: string;
+  admission_badge?: string;
+  duration_badge?: string;
+  format_badge?: string;
+}
+
+// ---------------------------------------------------------------------------
+// Defaults
+// ---------------------------------------------------------------------------
+const DEFAULT_METRICS: MetricItem[] = [
   {
     icon: Clock,
     label: "Admission closes",
@@ -26,6 +50,49 @@ const PROGRAM_METRICS = [
 ];
 
 export default function ProgramOverviewBar() {
+  const [metrics, setMetrics] = useState<MetricItem[]>(DEFAULT_METRICS);
+
+  useEffect(() => {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
+    if (!supabaseUrl || supabaseUrl.includes("placeholder")) return;
+
+    const supabase = createClient();
+
+    async function fetchConfig() {
+      const { data } = await supabase
+        .from("site_settings")
+        .select("value")
+        .eq("key", "cohort_config")
+        .single();
+
+      if (data?.value) {
+        const cfg = data.value as CohortConfig;
+        setMetrics([
+          {
+            icon: Clock,
+            label: "Admission closes",
+            value: cfg.admission_date ?? DEFAULT_METRICS[0].value,
+            badge: cfg.admission_badge ?? DEFAULT_METRICS[0].badge,
+          },
+          {
+            icon: Calendar,
+            label: "Programme duration",
+            value: cfg.duration ?? DEFAULT_METRICS[1].value,
+            badge: cfg.duration_badge ?? DEFAULT_METRICS[1].badge,
+          },
+          {
+            icon: BookOpen,
+            label: "Learning format",
+            value: cfg.format ?? DEFAULT_METRICS[2].value,
+            badge: cfg.format_badge ?? DEFAULT_METRICS[2].badge,
+          },
+        ]);
+      }
+    }
+
+    fetchConfig();
+  }, []);
+
   return (
     <section className="w-full px-4 sm:px-6 -mt-4 sm:-mt-6 mb-8 sm:mb-12 relative z-20">
       <motion.div
@@ -36,7 +103,7 @@ export default function ProgramOverviewBar() {
         className="max-w-5xl mx-auto rounded-2xl sm:rounded-3xl bg-[#0E1424]/90 border border-white/15 shadow-[0_16px_40px_rgba(0,0,0,0.6)] backdrop-blur-xl p-5 sm:p-7"
       >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-0 md:divide-x md:divide-white/10 items-center">
-          {PROGRAM_METRICS.map((item, idx) => {
+          {metrics.map((item, idx) => {
             const Icon = item.icon;
             return (
               <div 
