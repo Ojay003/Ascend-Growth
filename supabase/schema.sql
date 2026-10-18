@@ -68,6 +68,73 @@ VALUES
     }'::jsonb)
 ON CONFLICT (key) DO NOTHING;
 
+-- 6b. Insert New CMS Section Defaults
+INSERT INTO public.site_settings (key, value)
+VALUES
+    ('cohort_config', '{
+        "admission_date": "4 Sep, 2026",
+        "duration": "12 weeks",
+        "format": "Cohort-based learning",
+        "admission_badge": "Next Cohort",
+        "duration_badge": "Intensive",
+        "format_badge": "1-on-1 Mentorship"
+    }'::jsonb),
+    ('founder_config', '{
+        "section_badge": "From the Founder",
+        "founder_name": "Purity Gaiti",
+        "founder_title": "Founder & Lead Mentor",
+        "paragraph_1": "I didn''t learn business in a classroom. I learned it in the trenches of direct sales—building teams from scratch, mastering real-world outreach, and overcoming rejection daily.",
+        "paragraph_2": "I built Ascend because young professionals don''t need another theoretical lecture. They need practical, battle-tested \u201cstreet smarts\u201d and a mentor who has actually walked the path to financial independence.",
+        "quote": "We don''t teach theory. We teach mindset, resilience, and the exact skills you need to monetize your potential in the real world.",
+        "brand_label": "Ascend Growth International"
+    }'::jsonb),
+    ('cta_config', '{
+        "badge_text": "Next Cohort Applications Open",
+        "headline_line1": "No commitment.",
+        "headline_line2": "No pressure.",
+        "body": "A private 1-on-1 strategy call with founder Purity Gaiti to audit where you are currently stuck and map your transition into an independent, earning professional.",
+        "agenda_title": "Inside Your 30 Minutes:",
+        "agenda_footer": "Strictly capped at 30 minutes \u00b7 Direct with Founder Purity Gaiti",
+        "agenda_steps": [
+            {"time": "00 \u2013 10m", "title": "The Bottleneck Audit", "desc": "We diagnose where you are stuck\u2014whether it''s sending ghosted CVs, low market clarity, or lack of commercial confidence."},
+            {"time": "10 \u2013 20m", "title": "Skill & Offer Match", "desc": "We map your natural strengths against our 4-Phase framework to identify the high-ticket service you can monetize immediately."},
+            {"time": "20 \u2013 30m", "title": "Honest Fit & Action Plan", "desc": "You get transparent feedback on whether AGI is the right next step. If not, you still leave with a practical roadmap."}
+        ]
+    }'::jsonb),
+    ('program_config', '{
+        "section_badge": "The Framework",
+        "heading": "The 4-Phase Ascend Methodology",
+        "subheading": "A structured 12-week intensive cohort designed to transform stuck graduates into confident, self-reliant professionals.",
+        "deliverables_pills": ["1-on-1 Mentor Guidance", "Weekly Accountability Reviews", "Live Sales Role-Plays", "Real Client Invoicing"],
+        "phases": [
+            {"id": 0, "step": "Phase 01", "weeks": "Weeks 1-3", "title": "Mindset Calibration", "iconName": "BrainCircuit",
+             "shortDesc": "Rewire the graduate mindset and unlearn the ''wait-to-be-hired'' passive mentality.",
+             "fullDesc": "Before you learn to sell or invoice, you must shatter the academic illusion. We eliminate imposter syndrome, instill daily discipline, and train you to think like an independent service provider rather than a hopeful applicant.",
+             "deliverables": ["Deconstruct the ''Employee Mindset'' & build unshakeable confidence", "Daily high-performance routines & rejection desensitization", "Define your market positioning and high-leverage service offering"],
+             "milestone": "Graduation from theoretical student to active market operator."},
+            {"id": 1, "step": "Phase 02", "weeks": "Weeks 4-6", "title": "High-Value Market Skills", "iconName": "Zap",
+             "shortDesc": "Acquire the practical digital skills, direct outreach, and sales mastery the market pays for.",
+             "fullDesc": "No academic theory. You will master the exact skills businesses pay top-dollar for: direct DM & email outreach, objection handling, high-converting offer crafting, and effective client communication.",
+             "deliverables": ["Master high-ticket closing & live sales roleplay simulations", "Build a client-attracting portfolio & personalized outreach scripts", "Identify high-budget decision makers and craft irresistible proposals"],
+             "milestone": "A battle-tested pitch deck and 50+ qualified prospects contacted."},
+            {"id": 2, "step": "Phase 03", "weeks": "Weeks 7-9", "title": "Real-World Monetisation", "iconName": "TrendingUp",
+             "shortDesc": "Pitch live prospects, handle objections, and land your first paying client before cohort ends.",
+             "fullDesc": "This is where theory turns into bank alerts. Under direct 1-on-1 mentorship, you will conduct live discovery calls, pitch your services to real businesses, and close your first paying client.",
+             "deliverables": ["Live call reviews & real-time pitch feedback from mentor leads", "Negotiating payment terms, retainers, and closing deals", "Deploy your first service delivery without overwhelming yourself"],
+             "milestone": "Securing your first closed client and independent invoice paid."},
+            {"id": 3, "step": "Phase 04", "weeks": "Weeks 10-12", "title": "Scaling & Independence", "iconName": "Repeat2",
+             "shortDesc": "Build reliable systems to turn one-off gigs into predictable, recurring monthly income.",
+             "fullDesc": "Transform an initial client win into sustainable financial freedom. Build automated referral engines, structure retainer agreements, and master the art of long-term career independence.",
+             "deliverables": ["Transition from one-off gigs to recurring monthly retainers", "Systematized referral generation & network leverage", "12-Month Post-Cohort Independence & Growth Blueprint"],
+             "milestone": "A repeatable revenue engine and lifetime alumni network access."}
+        ]
+    }'::jsonb),
+    ('media_config', '{
+        "founder_image_url": null,
+        "message_image_url": null
+    }'::jsonb)
+ON CONFLICT (key) DO NOTHING;
+
 -- 7. Seed Initial Testimonials (Graduate & Parent Stories)
 INSERT INTO public.testimonials (name, role, quote, tag, tag_color, order_index, is_active)
 VALUES

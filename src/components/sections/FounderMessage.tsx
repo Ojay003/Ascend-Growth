@@ -110,10 +110,9 @@ export default function FounderMessage() {
               <p className="text-base sm:text-lg text-zinc-300 leading-relaxed">
                 {cfg.paragraph_1}
               </p>
-              <p
-                className="text-base sm:text-lg text-zinc-300 leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: cfg.paragraph_2 }}
-              />
+              <p className="text-base sm:text-lg text-zinc-300 leading-relaxed">
+                {cfg.paragraph_2}
+              </p>
             </motion.div>
             <motion.div variants={fadeUp} className="w-full text-center">
               <div className="relative bg-[#0E1424]/90 p-5 sm:p-6 rounded-2xl border border-white/12 shadow-2xl backdrop-blur-md space-y-3">

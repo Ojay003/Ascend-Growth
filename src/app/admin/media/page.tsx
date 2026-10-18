@@ -160,7 +160,7 @@ export default function MediaPage() {
     setFile: (f: File | null) => void;
     slotState: SlotState;
     setSlotState: React.Dispatch<React.SetStateAction<SlotState>>;
-    inputRef: React.RefObject<HTMLInputElement>;
+    inputRef: React.RefObject<HTMLInputElement | null>;
     slotName: "founder" | "message";
   }) => {
     const currentUrl = mediaConfig[slotKey];
