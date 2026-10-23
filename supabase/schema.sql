@@ -1,5 +1,4 @@
 -- Ascend Growth International - Supabase Schema
--- Run this in your Supabase SQL Editor (supabase.com -> SQL Editor -> New Query)
 
 -- 1. Enable UUID Extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
@@ -135,7 +134,7 @@ VALUES
     }'::jsonb)
 ON CONFLICT (key) DO NOTHING;
 
--- 7. Seed Initial Testimonials (Graduate & Parent Stories)
+-- 7. insert Testimonials (Graduate & Parent Stories)
 INSERT INTO public.testimonials (name, role, quote, tag, tag_color, order_index, is_active)
 VALUES
     ('Samuel K.', 'Marketing Consultant · Cohort 1', 'Sent 100+ CVs with zero replies. Ascend taught me commercial outreach and I landed a high-ticket client in 5 weeks.', 'Graduate Alum', 'bg-brand-gold/15 text-brand-gold border-brand-gold/30', 1, true),

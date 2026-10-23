@@ -116,12 +116,10 @@ export default function ProgramOverviewBar() {
                     : "md:pl-6"
                 }`}
               >
-                {/* Icon Container with subtle gold glow */}
                 <div className="w-12 h-12 rounded-2xl bg-[#13192B] border border-brand-gold/30 text-brand-gold flex items-center justify-center shrink-0 shadow-md">
                   <Icon className="w-5 h-5" />
                 </div>
 
-                {/* Metric Copy */}
                 <div className="flex flex-col space-y-0.5">
                   <span className="text-xs font-bold uppercase tracking-wider text-zinc-400">
                     {item.label}

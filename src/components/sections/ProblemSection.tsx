@@ -11,18 +11,15 @@ export default function ProblemSection() {
   const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   useEffect(() => {
-    // Detect if device is touch-primary (no mouse hover capability)
     if (typeof window !== "undefined") {
       setIsTouchDevice(!window.matchMedia("(hover: hover) and (pointer: fine)").matches);
     }
   }, []);
 
   const getCardClasses = (index: number) => {
-    // On mobile / touch devices, keep all cards 100% sharp and readable with no blur
     if (isTouchDevice || hoveredIndex === null) {
       return "opacity-100 blur-0 scale-100 border-white/12 bg-[#0D121F]/85 shadow-2xl";
     }
-    // On desktop mouse hover
     if (hoveredIndex === index) {
       return "opacity-100 blur-0 scale-[1.025] -translate-y-2 z-30 border-brand-gold bg-[#0F172A] shadow-[0_20px_50px_rgba(217,146,27,0.3)] ring-1 ring-brand-gold/60";
     }

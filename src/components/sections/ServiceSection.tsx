@@ -270,7 +270,6 @@ export default function ServicesSection() {
             })}
           </div>
 
-          {/* Active Phase Spotlight Panel with Radiant Gold Rim & Ambient Glow */}
           <div className="max-w-4xl mx-auto">
             <AnimatePresence mode="wait">
               <motion.div

@@ -34,7 +34,7 @@ interface CtaConfig {
 }
 
 // ---------------------------------------------------------------------------
-// Per-step colour classes (not stored in DB — always hard-coded)
+// Per-step colour classes
 // ---------------------------------------------------------------------------
 const STEP_STYLES: { iconColor: string; bgColor: string }[] = [
   { iconColor: "text-amber-400",   bgColor: "bg-amber-500/10 border-amber-500/30" },

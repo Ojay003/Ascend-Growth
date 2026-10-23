@@ -54,7 +54,6 @@ export default function Header() {
           top: offsetPosition,
           behavior: "smooth",
         });
-        // Update URL without triggering reload
         window.history.pushState(null, "", href);
       }
     }
@@ -63,11 +62,8 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full pt-3 sm:pt-4 px-3 sm:px-6 pointer-events-none">
       <div className="max-w-6xl mx-auto flex items-center justify-between pointer-events-auto">
-        
-        {/* Floating Glass Island Pill Container */}
         <div className="w-full flex items-center justify-between h-14 sm:h-16 px-4 sm:px-6 rounded-full bg-[#070A12]/85 border border-white/15 shadow-[0_8px_32px_rgba(0,0,0,0.5)] backdrop-blur-xl">
           
-          {/* Minimalist Golden Emblem + Wordmark */}
           <Link href="/" onClick={(e) => handleNavClick(e, "/")} className="flex-shrink-0 flex items-center gap-2.5 hover:opacity-90 transition-opacity group">
             <div className="relative w-8 h-8 sm:w-9 sm:h-9 shrink-0">
               <Image 

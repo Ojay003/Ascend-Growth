@@ -150,7 +150,7 @@ export default function TestimonialsSection() {
     loadTestimonials();
   }, []);
 
-  // Duplicate arrays for seamless infinite loop
+  // Duplicate arrays for testimonials
   const row1 = [...stories.graduates, ...stories.graduates, ...stories.graduates];
   const row2 = [...stories.parents, ...stories.parents, ...stories.parents];
 
@@ -159,11 +159,9 @@ export default function TestimonialsSection() {
       id="testimonials" 
       className="w-full py-16 sm:py-24 md:py-32 relative bg-transparent text-white overflow-hidden scroll-mt-24"
     >
-      {/* Ambient background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-brand-gold/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 mb-10 sm:mb-14 text-center space-y-4">
-        {/* Centered Section Header */}
         <motion.div 
           initial="hidden"
           whileInView="visible"
